@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 import string
 from random import SystemRandom
 
@@ -59,10 +60,10 @@ if not DEBUG:
 os.environ.setdefault("SSL", "")
 ssl = bool(env("SSL"))
 if ssl:
-    print("Enabling SSL proxy header")
+    print("Enabling SSL proxy header", file=sys.stderr)
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
-    print("Not enabling SSL proxy header")
+    print("Not enabling SSL proxy header", file=sys.stderr)
 
 # Application definition
 
