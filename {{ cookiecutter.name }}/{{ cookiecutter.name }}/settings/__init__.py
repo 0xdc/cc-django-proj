@@ -52,8 +52,11 @@ os.environ.setdefault("DEBUG", "")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(env("DEBUG"))
 
-if not DEBUG:
+try:
     ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
+except ImproperlyConfigured:
+    ALLOWED_HOSTS = [ "localhost", "127.0.0.1", "::1" ]
+    print("ALLOWED_HOSTS not set; defaulting to {}".format(", ".join(ALLOWED_HOSTS)), file=sys.stderr)
 
 # Detect proxied SSL header
 # https://docs.djangoproject.com/en/1.11/ref/settings/#secure-proxy-ssl-header
